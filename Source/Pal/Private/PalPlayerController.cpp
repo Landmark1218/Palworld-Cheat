@@ -1,0 +1,860 @@
+#include "PalPlayerController.h"
+#include "Net/UnrealNetwork.h"
+#include "PalAIActionComponent.h"
+#include "PalArenaSpectateComponent.h"
+#include "PalCutsceneComponent.h"
+#include "PalOtomoAutoAssignComponent.h"
+#include "PalSpectateComponent.h"
+#include "Templates/SubclassOf.h"
+
+APalPlayerController::APalPlayerController(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
+    this->bAutoManageActiveCameraTarget = false;
+    this->ClickEventKeys.AddDefaulted(1);
+    this->bAdmin = false;
+    this->AIActionComponent = CreateDefaultSubobject<UPalAIActionComponent>(TEXT("ActionsComp"));
+    this->CutsceneComponent = CreateDefaultSubobject<UPalCutsceneComponent>(TEXT("PalCutsceneComponent"));
+    this->OtomoAutoAssignComponent = CreateDefaultSubobject<UPalOtomoAutoAssignComponent>(TEXT("OtomoAutoAssignComponent"));
+    this->Transmitter = NULL;
+    this->WeaponPaletteLongPressTime = 1.00f;
+    this->PawnChangeCameraInterpChangeTime = 0.10f;
+    this->isOpenConstructionMenu = false;
+    this->RecoilCurve = NULL;
+    this->DamageCameraShake = NULL;
+    this->DamageForceFeedbackEffect = NULL;
+    this->CameraShakeForceFeedbackEffect = NULL;
+    this->DamageCamShakeRegulatorClass = NULL;
+    this->DamageCamShakeRegulator = NULL;
+    this->RollingCameraModifierClass = NULL;
+    this->AutoAimTarget = NULL;
+    this->PlayerInputOneFlameCommandList = NULL;
+    this->IsBuldingActiveFlag_ForServer = false;
+    this->SpectateComponent = CreateDefaultSubobject<UPalSpectateComponent>(TEXT("SpectateComponent"));
+    this->ArenaSpectateComponent = CreateDefaultSubobject<UPalArenaSpectateComponent>(TEXT("ArenaSpectateComponent"));
+    this->DiscordClient = NULL;
+    this->GuildDebugReplicator = NULL;
+}
+
+void APalPlayerController::UpdateCharacterNickName_ToServer_Implementation(const FPalInstanceID& InstanceId, const FString& NewNickName) {
+}
+
+bool APalPlayerController::TrySwitchOtomo() {
+    return false;
+}
+
+void APalPlayerController::TryExecuteDirectAttackOrder() {
+}
+
+void APalPlayerController::ThrowPalByOutSide(AActor* PreOtomoPal, UPalIndividualCharacterHandle* PreHandle) {
+}
+
+void APalPlayerController::TeleportToSafePoint_ToServer_Implementation(bool bWasOutOfWorld) {
+}
+
+bool APalPlayerController::StopDash() {
+    return false;
+}
+
+void APalPlayerController::StartStepCoolDownCoolTimer() {
+}
+
+void APalPlayerController::StartRollingCameraModifier() {
+}
+
+void APalPlayerController::StartFlyToServer_Implementation() {
+}
+
+void APalPlayerController::SpectateNextPlayer(int32 Direction) {
+}
+
+void APalPlayerController::SpectateFreely() {
+}
+
+void APalPlayerController::SkillDamageReactionComponent_ProcessDamage_ToServer_Implementation(UPalSkillDamageReactionComponent* SkillDamage, const FPalDamageInfo& Info) {
+}
+
+void APalPlayerController::ShooterComponent_StopReload_ToServer_Implementation(UPalShooterComponent* Shooter, int32 ID) {
+}
+
+void APalPlayerController::ShooterComponent_SetTargetDirection_ToServer_Implementation(UPalShooterComponent* Shooter, FVector targetDirection) {
+}
+
+void APalPlayerController::ShooterComponent_SetReloadStartRemainingBullets_ToServer_Implementation(UPalShooterComponent* Shooter, int32 bulletNum) {
+}
+
+void APalPlayerController::ShooterComponent_ReloadWeaponImmediate_ToServer_Implementation(UPalShooterComponent* Shooter, int32 consumeBulletNum, UPalDynamicWeaponItemDataBase* dynamicData) {
+}
+
+void APalPlayerController::ShooterComponent_ReloadWeapon_ToServer_Implementation(UPalShooterComponent* Shooter, int32 ID) {
+}
+
+void APalPlayerController::ShooterComponent_PullCancel_ToServer_Implementation(UPalShooterComponent* Shooter, int32 ID) {
+}
+
+void APalPlayerController::ShooterComponent_NotifyBulletItemId_ToServer_Implementation(UPalShooterComponent* Shooter, const APalWeaponBase* TargetWeapon, const FName& BulletItemId) {
+}
+
+void APalPlayerController::ShooterComponent_ChangeIsShooting_ToServer_Implementation(UPalShooterComponent* Shooter, int32 ID, bool IsShooting, bool bCanShootOnRelease) {
+}
+
+void APalPlayerController::ShooterComponent_ChangeIsJetpackShooting_ToServer_Implementation(UPalShooterComponent* Shooter, int32 ID, bool IsShooting) {
+}
+
+void APalPlayerController::ShooterComponent_ChangeIsAltShooting_ToServer_Implementation(UPalShooterComponent* Shooter, int32 ID, bool IsShooting, bool bCanShootOnRelease) {
+}
+
+void APalPlayerController::ShooterComponent_ChangeIsAiming_ToServer_Implementation(UPalShooterComponent* Shooter, int32 ID, EPalShooterFlagContainerPriority Priority, bool IsAiming) {
+}
+
+void APalPlayerController::SetupInternalForSphere_ToServer_Implementation(int32 ID, APalSphereBodyBase* Target, APalCharacter* TargetCharacter) {
+}
+
+void APalPlayerController::SetupInternalForSphere_ToALL_Implementation(int32 ID, APalSphereBodyBase* Target, APalCharacter* TargetCharacter) {
+}
+
+void APalPlayerController::SetupInternalForSphere(APalSphereBodyBase* Target, APalCharacter* TargetCharacter) {
+}
+
+void APalPlayerController::SetSneakBonusFlagForSphere_ToServer_Implementation(int32 ID, APalSphereBodyBase* Target, bool isSneak) {
+}
+
+void APalPlayerController::SetSneakBonusFlagForSphere_ToALL_Implementation(int32 ID, APalSphereBodyBase* Target, bool isSneak) {
+}
+
+void APalPlayerController::SetSneakBonusFlagForSphere(APalSphereBodyBase* Target, bool isSneak) {
+}
+
+void APalPlayerController::SetRiderRelativeRotation_ToServer_Implementation(FRotator Rotator) {
+}
+
+
+
+void APalPlayerController::SetDisableThrowPalFlag(FName flagName, bool isDisable) {
+}
+
+void APalPlayerController::SetDisableSwitchPalFlag(FName flagName, bool isDisable) {
+}
+
+void APalPlayerController::SetDisableSetViewTargetFlag(FName flagName, bool isDisable) {
+}
+
+void APalPlayerController::SetDisableSelectingBulletFlag(FName flagName, bool isDisable) {
+}
+
+void APalPlayerController::SetDisablePartnerInstructionsFlag(FName flagName, bool isDisable) {
+}
+
+void APalPlayerController::SetDisableInputFlag_ToClient_Implementation(FName flagName, bool bIsDisable) {
+}
+
+void APalPlayerController::SetDisableInputFlag(FName flagName, bool isDisable) {
+}
+
+void APalPlayerController::SetDisableCoopFlag(FName flagName, bool isDisable) {
+}
+
+void APalPlayerController::SetDisableAimInputFlag(FName flagName, bool isDisable) {
+}
+
+void APalPlayerController::SetCriticalCaptureFlagForSphere_ToServer_Implementation(int32 PlayerId, APalSphereBodyBase* TargetSphere, bool bIsCritical) {
+}
+
+void APalPlayerController::SetCriticalCaptureFlagForSphere_ToALL_Implementation(int32 PlayerId, APalSphereBodyBase* TargetSphere, bool bIsCritical) {
+}
+
+void APalPlayerController::SetCriticalCaptureFlagForSphere(APalSphereBodyBase* TargetSphere, bool bIsCritical) {
+}
+
+void APalPlayerController::SetCaptureLevelForSphere_ToServer_Implementation(int32 ID, APalSphereBodyBase* Target, int32 Level) {
+}
+
+void APalPlayerController::SetCaptureLevelForSphere_ToALL_Implementation(int32 ID, APalSphereBodyBase* Target, int32 Level) {
+}
+
+void APalPlayerController::SetCaptureLevelForSphere(APalSphereBodyBase* Target, int32 Level) {
+}
+
+void APalPlayerController::SetCameraRotatorToPlayerCharacter_ToServer_Implementation(FRotator CameraRotator) {
+}
+
+void APalPlayerController::SetAutoRun(bool bEnable) {
+}
+
+void APalPlayerController::SendScreenLogToClient_Implementation(const FString& Message, FLinearColor Color, float Duration, const FName& Key) {
+}
+
+void APalPlayerController::SendLog_ToClient_Implementation(const EPalLogPriority Priority, EPalLocalizeTextCategory TextCategory, const FName TextId, const FPalLogAdditionalData& AdditionalData) {
+}
+
+void APalPlayerController::SendBuldingActiveFlag_ToServer_Implementation(bool IsActive) {
+}
+
+void APalPlayerController::SendAlertDialog_ToClient_Implementation(const FName TextId) {
+}
+
+void APalPlayerController::SelfKillPlayer_Implementation() {
+}
+
+void APalPlayerController::RPCDummy_Implementation() {
+}
+
+void APalPlayerController::ReserveSummonWeapon_ToServer_Implementation(UPalDynamicWeaponItemDataBase* InDynamicItem) {
+}
+
+void APalPlayerController::RequestUseItemToCharacter_ToServer_Implementation(const FPalItemSlotIdAndNum& ItemData, const FPalInstanceID& TargetCharacterID) {
+}
+
+void APalPlayerController::RequestUseItemToCharacter(const FPalItemSlotIdAndNum& ItemData, const FPalInstanceID& TargetCharacterID) {
+}
+
+void APalPlayerController::RequestSyncOilrigDestroyObject_ToServer_Implementation(FGuid ObjectID) {
+}
+
+void APalPlayerController::RequestSwapDimensionStorageData_ToServer_Implementation(int32 IndexA, int32 IndexB) {
+}
+
+void APalPlayerController::RequestSwapBetweenDimensionStorageAndPalStorage_ToServer_Implementation(int32 DimensionStorageDataIndex, int32 PalStorageDataIndex) {
+}
+
+void APalPlayerController::RequestStartNPCTalkFlow_Implementation(UPalNPCTalkFlowComponent* TalkFlowComponent) {
+}
+
+void APalPlayerController::RequestSortDimensionStorage_ToServer_Implementation(const FPalCharacterContainerSortInfo& SortInfo) {
+}
+
+void APalPlayerController::RequestSetRolePermission_ToServer_Implementation(EPalGuildRole TargetRole, EPalGuildPermission Permission, bool bEnable) {
+}
+
+void APalPlayerController::RequestSendAllDimensionStorage_ToServer_Implementation() {
+}
+
+void APalPlayerController::RequestRestoreDimensionStorageFixedIndex_ToServer_Implementation(int32 OriginalLockerDataIndex, int32 TargetRestorePalStorageSlotIndex) {
+}
+
+void APalPlayerController::RequestRestoreDimensionStorage_ToServer_Implementation(int32 OriginalLockerDataIndex, int32 TargetRestorePalStorageRootPageIndex) {
+}
+
+void APalPlayerController::RequestRemoveGuildMarker_ToServer_Implementation(const FGuid& MarkerID) {
+}
+
+void APalPlayerController::RequestOpenDimensionStorage_ToServer_Implementation(const FGuid& LockerMapObjectId) {
+}
+
+void APalPlayerController::RequestOilrigGoalCrateInteract_Implementation() {
+}
+
+void APalPlayerController::RequestMoveToWorker_ToServer_Implementation(APalCharacter* TargetCharacter) {
+}
+
+void APalPlayerController::RequestLiftupThrow_ToServer_Implementation(AActor* Target) {
+}
+
+void APalPlayerController::RequestLiftup_ToServer_Implementation(APalCharacter* TargetCharacter) {
+}
+
+void APalPlayerController::RequestImportGlobalPalStorageData_ToServer_Implementation(const FPalGlobalPalStorageSaveParameter& ImportParameter, const int32 TargetSlotIndex, const FPalGlobalPalStorageImportOption& ImportOption) {
+}
+
+void APalPlayerController::RequestGetUserInfoByPlayerUId_ToServer_Implementation(FGuid InPlayerUId) {
+}
+
+void APalPlayerController::RequestFastTravel_ToServer_Implementation(const FGuid& LocationId) {
+}
+
+void APalPlayerController::RequestExitGuild_ToServer_Implementation() {
+}
+
+void APalPlayerController::RequestEnterToPlayerGuild_ToServer_Implementation(APalPlayerCharacter* RespondentPlayerCharacter) {
+}
+
+void APalPlayerController::RequestEnterRoom_ToServer_Implementation(const FPalStageInstanceId& StageInstanceId, const UPalStageEnterParameterRoom* EnterParameter) {
+}
+
+void APalPlayerController::RequestEndNPCTalkFlow_Implementation(UPalNPCTalkFlowComponent* TalkFlowComponent, const FGuid& Token, bool bIsCancel, bool bResetCount) {
+}
+
+void APalPlayerController::RequestEnableGuildDebugReplicator_ToServer_Implementation(const FGuid& GuildId) {
+}
+
+void APalPlayerController::RequestDisableGuildDebugReplicator_ToServer_Implementation(const FGuid& GuildId) {
+}
+
+void APalPlayerController::RequestDestroyOilrigCannon_Implementation(APalOilRigCannonBase* Cannon) {
+}
+
+void APalPlayerController::RequestDestroyAntiAirLauncher_Implementation(APalAntiAirMissileLauncher* Launcher) {
+}
+
+void APalPlayerController::RequestDecreaseWeaponDurability_ToServer_Implementation(FPalItemId ItemId, float DecreaseValue) {
+}
+
+void APalPlayerController::RequestDebugValidateResult_ToServer_Implementation(const FGuid& GuildId, EPalGuildPermission Permission, const FGuid& TargetPlayerUId) {
+}
+
+void APalPlayerController::RequestDebugReplicationCompare_ToServer_Implementation(const FGuid& GuildId) {
+}
+
+void APalPlayerController::RequestDebugOtherGuildInfo_ToServer_Implementation(const FGuid& GuildId) {
+}
+
+void APalPlayerController::RequestDebugGuildInfo_ToServer_Implementation(const FGuid& GuildId) {
+}
+
+void APalPlayerController::RequestCloseDimensionStorage_ToServer_Implementation() {
+}
+
+void APalPlayerController::RequestChangeRole_ToServer_Implementation(const FGuid& TargetPlayerUId, EPalGuildRole NewRole) {
+}
+
+void APalPlayerController::RequestChangeGuildName_ToServer_Implementation(const FString& NewGuildName) {
+}
+
+void APalPlayerController::RequestChangeGuildMarker_ToServer_Implementation(const FGuid& MarkerID, const FPalGuildMarkerData& NewMarker) {
+}
+
+void APalPlayerController::RequestChangeDimensionStoragePage_ToServer_Implementation(int32 NewPageNum) {
+}
+
+void APalPlayerController::RequestChangeCharacterMakeInfo_ToServer_Implementation(const FPalPlayerDataCharacterMakeInfo& NewMakeInfo) {
+}
+
+void APalPlayerController::RequestChangeAdminGuild_ToServer_Implementation(const FGuid& NextAdminPlayerUId) {
+}
+
+void APalPlayerController::RequestBanPlayerFromGuild_ToServer_Implementation(const FGuid& TargetPlayerUId) {
+}
+
+void APalPlayerController::RequestAddGuildMarker_ToServer_Implementation(const FGuid& MarkerID, const FPalGuildMarkerData& NewMarker) {
+}
+
+void APalPlayerController::RequestAddDimensionStorageDataFixedDataIndex_ToServer_Implementation(int32 TargetLockerDataIndex, int32 OriginalPalStorageDataSlotIndex) {
+}
+
+void APalPlayerController::RequestAddDimensionStorageData_ToServer_Implementation(const TArray<int32>& OriginalPalStorageDataIndexArray, int32 RootPageIndex) {
+}
+
+void APalPlayerController::ReplaceEquipWaza_ToServer_Implementation(const FPalInstanceID& InstanceId, const EPalWazaID OldWaza, const EPalWazaID NewWaza) {
+}
+
+void APalPlayerController::RemoveEquipWaza_ToServer_Implementation(const FPalInstanceID& InstanceId, const EPalWazaID TargetWaza) {
+}
+
+void APalPlayerController::RemoveCameraRotateSpeedModifierRate(const FName& modifierName) {
+}
+
+void APalPlayerController::ReleaseSummonWeapon_ToServer_Implementation(UPalDynamicWeaponItemDataBase* InDynamicItem) {
+}
+
+void APalPlayerController::ReceiveSuccessRequestEnterGuild_ToClient_Implementation(const EPalGuildJoinRequestResult Result, const FPalInstanceID& EnterPlayerInstanceId) {
+}
+
+void APalPlayerController::ReceiveOfferJoinGuildPlayer_ToClient_Implementation(const FGuid& FlowUniqueId, const FPalInstanceID& RequestPlayerInstanceId) {
+}
+
+void APalPlayerController::ReceiveLiftupRequestResult_ToClient_Implementation(EPalLiftupRequestResult Result) {
+}
+
+void APalPlayerController::ReceiveFailedRequestGuildWithLog_ToClient_Implementation(const EPalGuildJoinRequestResult Result) {
+}
+
+void APalPlayerController::ReceiveFailedRequestGuildWithAlert_ToClient_Implementation(const EPalGuildJoinRequestResult Result) {
+}
+
+void APalPlayerController::ReceiveDebugValidateResult_ToClient_Implementation(bool bHasPermission, EPalGroupOperationResult Result) {
+}
+
+void APalPlayerController::ReceiveDebugReplicationCompare_ToClient_Implementation(bool bInSync, int32 MemberCountServer, int32 MemberCountClient) {
+}
+
+void APalPlayerController::ReceiveDebugOtherGuildInfo_ToClient_Implementation(const FGuid& GuildId, const FString& GuildName, int32 MemberCount) {
+}
+
+void APalPlayerController::ReceiveDebugGuildInfo_ToClient_Implementation(const FGuid& GuildId, const FString& GuildName, int32 MemberCount, const FGuid& MasterUId) {
+}
+
+void APalPlayerController::ReauestDamageExplode_ToServer_Implementation(UPalDamageExplodeComponent* ExplodeComponent, const FPalDamageInfo DamageInfo) {
+}
+
+bool APalPlayerController::PlaySkill(int32 SlotId) {
+    return false;
+}
+
+void APalPlayerController::PalDeprojectScreenPositionToWorld(FVector& StartLocation, FVector& RayDirection) {
+}
+
+void APalPlayerController::OnWeaponNotify(EWeaponNotifyType Type) {
+}
+
+void APalPlayerController::OnUpdateWeightInventory(float Weight) {
+}
+
+void APalPlayerController::OnUpdateStatusPoint_FoodDecayReduction(FName StatusName, int32 PrevPoint, int32 NewPoint) {
+}
+
+void APalPlayerController::OnUpdateOtomoSlotWithCompletedInitializedParameter_ServerInternal(APalCharacter* PalCharacter) {
+}
+
+void APalPlayerController::OnUpdateOtomoSlotWithActor_ServerInternal(int32 SlotIndex, UPalIndividualCharacterHandle* LastHandle) {
+}
+
+
+void APalPlayerController::OnStartGliding() {
+}
+
+
+void APalPlayerController::OnStartAim() {
+}
+
+
+void APalPlayerController::OnReleasedSpawnPalButton() {
+}
+
+void APalPlayerController::OnReceiveConfirmResultRequestGuild_ClientInternal(const bool bResponse) {
+}
+
+void APalPlayerController::OnPressedWeaponPrevButton() {
+}
+
+void APalPlayerController::OnPressedWeaponNextButtonKeyboard() {
+}
+
+
+void APalPlayerController::OnPressedInteract2Button() {
+}
+
+void APalPlayerController::OnOverWeightInventory(float Weight) {
+}
+
+
+
+
+
+
+
+void APalPlayerController::OnLongReleasedSpawnPalButton() {
+}
+
+void APalPlayerController::OnLongPressedCoopButton() {
+}
+
+void APalPlayerController::OnLanded(UPalCharacterMovementComponent* MovementComponent, const FHitResult& Hit) {
+}
+
+void APalPlayerController::OnJump(UPalCharacterMovementComponent* MovementComponent) {
+}
+
+
+
+
+void APalPlayerController::OnFixedWeightInventory(float Weight) {
+}
+
+void APalPlayerController::OnFilteredKillLog(UPalKillLogFilteringWaiter* Waiter, const FPalKillLogDisplayData& KillLogData) {
+}
+
+void APalPlayerController::OnEndRolling() {
+}
+
+
+void APalPlayerController::OnEndAim() {
+}
+
+void APalPlayerController::OnDestroyPawn(AActor* DestroyedActor) {
+}
+
+void APalPlayerController::OnDamage(FPalDamageResult DamageResult) {
+}
+
+void APalPlayerController::OnCreatedGPSPalData(FPalInstanceID IndividualId) {
+}
+
+void APalPlayerController::OnChangeSwimming(bool IsInSwimming) {
+}
+
+void APalPlayerController::OnChangePadOption(const FPalOptionPadSettings& PrevSettings, const FPalOptionPadSettings& NewSettings) {
+}
+
+
+void APalPlayerController::OnChangeKeyboardOption(const FPalOptionKeyboardSettings& PrevSettings, const FPalOptionKeyboardSettings& NewSettings) {
+}
+
+
+void APalPlayerController::OnActionBegin(const UPalActionBase* ActionBase) {
+}
+
+void APalPlayerController::NotifyWarningSignByAntiAirMissileLauncher_ToClient_Implementation(bool IsShow, FGuid CannonID, FVector AttaclerLocation) {
+}
+
+void APalPlayerController::NotifyTimeoutDimensionLocker_Implementation() {
+}
+
+void APalPlayerController::NotifyRideWallStop_ToClient_Implementation() {
+}
+
+void APalPlayerController::NotifyRestoreDimensionStorageDataToPalstorage_Implementation(int32 RestoredPalstorageDataIndex) {
+}
+
+void APalPlayerController::NotifyOilrigGoalCrateOpen_ToClient_Implementation() {
+}
+
+void APalPlayerController::NotifyNPCTalkToken_Implementation(UPalNPCTalkFlowComponent* TalkFlowComponent, const FGuid& NewToken, const int32 TalkCount) {
+}
+
+void APalPlayerController::NotifyNickNameUpdated_ToClient_Implementation(FGuid PlayerUId, const FString& PlayerName, FGuid GroupId, const FString& GuildName) {
+}
+
+void APalPlayerController::NotifyLiftupCampPal_ToClient_Implementation(APalCharacter* TargetCharacter) {
+}
+
+void APalPlayerController::NotifyImportGlobalPalStorageDataResult_ToClient_Implementation(EPalGlobalStorageImportResult ImportResult, const FPalGlobalPalStorageImportResultAdditionalData& AdditionalData) {
+}
+
+void APalPlayerController::NotifyGuildNameUpdated_ToClient_Implementation(FGuid GroupId, const FString& NewGuildName) {
+}
+
+void APalPlayerController::NotifyGetUserInfoByPlayerUId_ToClient_Implementation(bool bSuccess, FGuid PlayerUId, const FString& PlayerName, FGuid GroupId, const FString& GuildName) {
+}
+
+void APalPlayerController::NotifyFailedStartRaidByOverConcurrentStageLimitation_ToClient_Implementation() {
+}
+
+void APalPlayerController::NotifyConfirmRequestGuild_ToServer_Implementation(const FGuid& FlowUniqueId, const bool bResponse) {
+}
+
+void APalPlayerController::LostOtomoByInstacneID_ToServer_Implementation(const FPalInstanceID& InstanceId) {
+}
+
+void APalPlayerController::JumpCancelPalThrow(UPalCharacterMovementComponent* MovementComponent) {
+}
+
+bool APalPlayerController::IsSwimming() const {
+    return false;
+}
+
+bool APalPlayerController::IsSpectating() const {
+    return false;
+}
+
+bool APalPlayerController::IsSelectingBullet() const {
+    return false;
+}
+
+bool APalPlayerController::IsRidingFlyPal() const {
+    return false;
+}
+
+bool APalPlayerController::IsRiding() const {
+    return false;
+}
+
+bool APalPlayerController::IsOtomoPartnerSkillCanTrigger() const {
+    return false;
+}
+
+bool APalPlayerController::IsCooping() const {
+    return false;
+}
+
+bool APalPlayerController::IsBuldingActiveFlagForServer() const {
+    return false;
+}
+
+void APalPlayerController::IncrementFavoriteIndexPal_ToServer_Implementation(const FPalInstanceID& InstanceId) {
+}
+
+void APalPlayerController::IncrementDimensionStoragePalFavoriteIndex_ToServer_Implementation(int32 TargetLockerDataIndex) {
+}
+
+
+
+APalCharacter* APalPlayerController::GetRiderCharacter() const {
+    return NULL;
+}
+
+FGuid APalPlayerController::GetPlayerUId() const {
+    return FGuid{};
+}
+
+UPalSpectateComponent* APalPlayerController::GetPalSpectateComponent() {
+    return NULL;
+}
+
+APalPlayerState* APalPlayerController::GetPalPlayerState() const {
+    return NULL;
+}
+
+void APalPlayerController::GetOffToServer_Implementation() {
+}
+
+APawn* APalPlayerController::GetLowBodyPawn() const {
+    return NULL;
+}
+
+APalCharacter* APalPlayerController::GetLowBodyPalCharacter() const {
+    return NULL;
+}
+
+UPalLoadoutSelectorComponent* APalPlayerController::GetLoadoutSelectorComponent() const {
+    return NULL;
+}
+
+FVector2D APalPlayerController::GetKeyboardMoveValue() const {
+    return FVector2D{};
+}
+
+APalCharacter* APalPlayerController::GetDefaultPlayerCharacter() const {
+    return NULL;
+}
+
+APalCharacter* APalPlayerController::GetControlPalCharacter() const {
+    return NULL;
+}
+
+FVector2D APalPlayerController::GetControllerRightStickValue() const {
+    return FVector2D{};
+}
+
+FVector2D APalPlayerController::GetControllerLeftStickValue() const {
+    return FVector2D{};
+}
+
+void APalPlayerController::FlushCoopActionLongPressInput() {
+}
+
+void APalPlayerController::EnterChat_Receive_Implementation(const FString& Message, uint8 Category) {
+}
+
+void APalPlayerController::EndSpectate() {
+}
+
+void APalPlayerController::EndFlyToServer_Implementation() {
+}
+
+void APalPlayerController::EnableShootingByAction(const UPalActionComponent* Component) {
+}
+
+
+
+void APalPlayerController::Debug_UnlockAllAreaBarriers_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_TogglePartnerSkillNoDecrease_Implementation() {
+}
+
+void APalPlayerController::Debug_ToggleBaseCampPalFarMovementTickSuppress_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_TeleportToNearestPlayer_Implementation() {
+}
+
+void APalPlayerController::Debug_TeleportToNearestCamp_Implementation() {
+}
+
+void APalPlayerController::Debug_TeleportToBotLocation_Implementation(int32 botIndex) {
+}
+
+void APalPlayerController::Debug_TeleportToBotCamp_Implementation(int32 botIndex) {
+}
+
+void APalPlayerController::Debug_Teleport2D_FixedZ_Implementation(const FVector& Location) {
+}
+
+void APalPlayerController::Debug_Teleport2D_Implementation(const FVector& Location) {
+}
+
+void APalPlayerController::Debug_ShowInvaderDebugLog_Implementation() {
+}
+
+void APalPlayerController::Debug_SetStatusPoint_ToServer_Implementation(FName StatusPointName, int32 StatusLevel) {
+}
+
+void APalPlayerController::Debug_SetPalWorldTimeScale_Implementation(float Rate) {
+}
+
+void APalPlayerController::Debug_SetPalWorldTime_Implementation(int32 Hour) {
+}
+
+void APalPlayerController::Debug_SetPalCaptureNumRecordAll_Implementation(const int32 CaptureNum) {
+}
+
+void APalPlayerController::Debug_SetPalCaptureNumRecord_Implementation(const EPalTribeID TribeId, const int32 CaptureNum) {
+}
+
+void APalPlayerController::Debug_SetFPSForServer_Implementation(float fps) {
+}
+
+void APalPlayerController::Debug_SetBaseCampPalFarMovementTickSuppress_ToServer_Implementation(bool bOn) {
+}
+
+void APalPlayerController::Debug_SetArenaRankPoint_Implementation(int32 RankPoint) {
+}
+
+void APalPlayerController::Debug_RerollCharacterMake_Implementation() {
+}
+
+void APalPlayerController::Debug_ReceiveCheatCommand_ToClient_Implementation(const FString& Message) {
+}
+
+void APalPlayerController::Debug_ParallelForUpdateActiveTiles_Implementation() {
+}
+
+void APalPlayerController::Debug_NotConsumeMaterialsInCraft_Implementation() {
+}
+
+void APalPlayerController::Debug_NotConsumeMaterialsInBuild_Implementation() {
+}
+
+void APalPlayerController::Debug_NetRepGraphPrintGraph_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_Muteki_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_InvaderMarchRandom_Implementation() {
+}
+
+void APalPlayerController::Debug_InvaderMarchForNearCamp_Implementation(FName InvaderGropuName, bool bSkipInvaderDeclaration) {
+}
+
+void APalPlayerController::Debug_InvaderMarch_Implementation(FName InvaderGropuName, bool bSkipInvaderDeclaration) {
+}
+
+void APalPlayerController::Debug_InsightsTraceStop_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_InsightsTraceStart_ToServer_Implementation(const FString& TraceFilePrefix) {
+}
+
+void APalPlayerController::Debug_IgnoreRestrictedByItemsForPartnerSkill_Implementation() {
+}
+
+void APalPlayerController::Debug_HighJump_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_HighJump() {
+}
+
+void APalPlayerController::Debug_ForceSpawnRarePal_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_ForceSpawnPredatorPal_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_EnableCollectPalCount_Implementation() {
+}
+
+void APalPlayerController::Debug_DumpPalCharacterActors_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_DumpActors_ToServer_Implementation() {
+}
+
+void APalPlayerController::Debug_DisableAnimTickForServer_Implementation() {
+}
+
+void APalPlayerController::Debug_CheatCommand_ToServer_Implementation(const FString& Command) {
+}
+
+void APalPlayerController::Debug_AddPlayerExp_ToServer_Implementation(int32 addExp) {
+}
+
+void APalPlayerController::Debug_AddPartyExp_ToServer_Implementation(int32 addExp) {
+}
+
+void APalPlayerController::Debug_AddMoney_ToServer_Implementation(int64 addValue) {
+}
+
+void APalPlayerController::Debug_AddExpForALLPlayer_ToServer_Implementation(int32 addExp) {
+}
+
+void APalPlayerController::DamageReactionComponent_ProcessDeath_ToServer_ToSelfPlayer_Implementation() {
+}
+
+void APalPlayerController::DamageReactionComponent_ProcessDeath_ToServer_ToNPC_Implementation(const AActor* TargetActor) {
+}
+
+void APalPlayerController::DamageReactionComponent_ProcessDamage_ToServer_ToSelfPlayer_Implementation(const FPalDamageInfo& Info, const AActor* DefenderOtomo) {
+}
+
+void APalPlayerController::DamageReactionComponent_ProcessDamage_ToServer_ToNPC_Implementation(const FPalDamageInfo& Info, const AActor* Defender) {
+}
+
+void APalPlayerController::DamageReactionComponent_ProcessDamage_ToServer_ToEnemyPlayer_Implementation(const FPalDamageInfo& Info, const AActor* Defender) {
+}
+
+void APalPlayerController::ConfirmRequestJoinGuildWarning_ToClient_Implementation(const FGuid& FlowUniqueId) {
+}
+
+void APalPlayerController::ConfirmRequestGuild_ToClient_Implementation(const FGuid& FlowUniqueId, const EPalGuildJoinRequestConfirm ConfirmType) {
+}
+
+void APalPlayerController::ClientPlayForceFeedbackForPal_Internal_Implementation(UForceFeedbackEffect* ForceFeedbackEffect, FName Tag, bool bLooping, bool bIgnoreTimeDilation, bool bPlayWhilePaused) {
+}
+
+void APalPlayerController::ClientPlayForceFeedbackForPal(UForceFeedbackEffect* ForceFeedbackEffect, FName Tag, bool bLooping, bool bIgnoreTimeDilation, bool bPlayWhilePaused) {
+}
+
+void APalPlayerController::ClientBeginSpectate_Implementation(bool bAdminMode) {
+}
+
+void APalPlayerController::ClearSummonWeapon_ToServer_Implementation(UPalDynamicWeaponItemDataBase* InDynamicItem) {
+}
+
+void APalPlayerController::ChangeSpectateMoveSpeed(int32 Direction) {
+}
+
+bool APalPlayerController::CanPlayWhistleForRideCall() const {
+    return false;
+}
+
+void APalPlayerController::CannonDamageReactionComponent_ProcessDamage_ToServer_Implementation(UPalCannonDamageReactionComponent* CannonDamage, const FPalDamageInfo& Info) {
+}
+
+bool APalPlayerController::CanCooping() const {
+    return false;
+}
+
+void APalPlayerController::CancelSelectingBullet() {
+}
+
+void APalPlayerController::CancelRollingCameraModifier() {
+}
+
+void APalPlayerController::CallOnCoopReleaseDelegate_ToServer_Implementation() {
+}
+
+void APalPlayerController::CallOnCoopReleaseDelegate_ToAll_Implementation() {
+}
+
+void APalPlayerController::BeginSpectate(bool bAdminMode) {
+}
+
+void APalPlayerController::AddPlayerStatusPoint_ToServer_Implementation(const TArray<FPalGotStatusPoint>& AddStatusPointArray) {
+}
+
+void APalPlayerController::AddKillLog_Client_Implementation(const FPalKillLogDisplayData& KillLogData) {
+}
+
+void APalPlayerController::AddHardcorePlayerDeathLog_Client_Implementation(const FPalKillLogDisplayData& DeathLogData) {
+}
+
+void APalPlayerController::AddEquipWaza_ToServer_Implementation(const FPalInstanceID& InstanceId, const EPalWazaID NewWaza) {
+}
+
+void APalPlayerController::AddDeathLog_Client_Implementation(const FPalKillLogDisplayData& DeathLogData) {
+}
+
+void APalPlayerController::AddCameraRotateSpeedModifierRate(const FName& modifierName, float Rate) {
+}
+
+
+void APalPlayerController::ActionComponent_PlayAction_ToServer_ForPlayer_Implementation(AActor* TargetActor, FActionDynamicParameter Param, TSubclassOf<UPalActionBase> actionClass, int32 issuerID) {
+}
+
+void APalPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    
+    DOREPLIFETIME(APalPlayerController, bAdmin);
+    DOREPLIFETIME(APalPlayerController, Transmitter);
+}
+
+

@@ -1,0 +1,108 @@
+#include "PalMapObjectConcreteModelBase.h"
+#include "Net/UnrealNetwork.h"
+
+UPalMapObjectConcreteModelBase::UPalMapObjectConcreteModelBase() {
+    this->bDisposed = false;
+    this->WorkeeModuleCache = NULL;
+    this->GuildSecurityModuleCache = NULL;
+}
+
+FName UPalMapObjectConcreteModelBase::TryGetMapObjectId() const {
+    return NAME_None;
+}
+
+FText UPalMapObjectConcreteModelBase::TryGetItemContainerOverrideName() const {
+    return FText::GetEmpty();
+}
+
+void UPalMapObjectConcreteModelBase::OnTriggerInteract(AActor* Other, EPalInteractiveObjectIndicatorType IndicatorType) {
+}
+
+void UPalMapObjectConcreteModelBase::OnTriggeringInteract(AActor* Other, EPalInteractiveObjectIndicatorType IndicatorType, const float DeltaTime) {
+}
+
+void UPalMapObjectConcreteModelBase::OnStartTriggerInteract(AActor* Other, EPalInteractiveObjectIndicatorType IndicatorType) {
+}
+
+void UPalMapObjectConcreteModelBase::OnRep_ModuleArray() {
+}
+
+void UPalMapObjectConcreteModelBase::OnEndTriggerInteract(AActor* Other, EPalInteractiveObjectIndicatorType IndicatorType) {
+}
+
+UPalMapObjectWorkeeModule* UPalMapObjectConcreteModelBase::GetWorkeeModule() const {
+    return NULL;
+}
+
+FTransform UPalMapObjectConcreteModelBase::GetTransform() const {
+    return FTransform{};
+}
+
+UPalMapObjectSwitchModule* UPalMapObjectConcreteModelBase::GetSwitchModule() const {
+    return NULL;
+}
+
+UPalMapObjectPasswordLockModule* UPalMapObjectConcreteModelBase::GetPasswordLockModule() const {
+    return NULL;
+}
+
+FGuid UPalMapObjectConcreteModelBase::GetModelInstanceId() const {
+    return FGuid{};
+}
+
+void UPalMapObjectConcreteModelBase::GetMapObjectLocation(FVector& outVector) {
+}
+
+UPalMapObjectItemContainerModule* UPalMapObjectConcreteModelBase::GetItemContainerModule() const {
+    return NULL;
+}
+
+TScriptInterface<IPalMapObjectItemContainerAccessInterface> UPalMapObjectConcreteModelBase::GetItemContainerAccess() {
+    return NULL;
+}
+
+TScriptInterface<IPalMapObjectItemContainerAccessInterface> UPalMapObjectConcreteModelBase::GetItemChestContainerAccess() {
+    return NULL;
+}
+
+FGuid UPalMapObjectConcreteModelBase::GetInstanceId() const {
+    return FGuid{};
+}
+
+UPalMapObjectGuildSecurityModule* UPalMapObjectConcreteModelBase::GetGuildSecurityModule() const {
+    return NULL;
+}
+
+UPalMapObjectEnergyModule* UPalMapObjectConcreteModelBase::GetEnergyModule() const {
+    return NULL;
+}
+
+UPalMapObjectCharacterContainerModule* UPalMapObjectConcreteModelBase::GetCharacterContainerModule() const {
+    return NULL;
+}
+
+UPalBaseCampModel* UPalMapObjectConcreteModelBase::GetBaseCampModelBelongTo() const {
+    return NULL;
+}
+
+FGuid UPalMapObjectConcreteModelBase::GetBaseCampIdBelongTo() const {
+    return FGuid{};
+}
+
+APalMapObject* UPalMapObjectConcreteModelBase::GetActor() const {
+    return NULL;
+}
+
+void UPalMapObjectConcreteModelBase::CallOrRegisterOnReadyModule(const EPalMapObjectConcreteModelModuleType ModuleType, FPalMapObjectModuleDelegate Delegate) {
+}
+
+void UPalMapObjectConcreteModelBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    
+    DOREPLIFETIME(UPalMapObjectConcreteModelBase, InstanceId);
+    DOREPLIFETIME(UPalMapObjectConcreteModelBase, ModelInstanceId);
+    DOREPLIFETIME(UPalMapObjectConcreteModelBase, bDisposed);
+    DOREPLIFETIME(UPalMapObjectConcreteModelBase, ModuleRepInfoArray);
+}
+
+

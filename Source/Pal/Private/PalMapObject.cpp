@@ -1,0 +1,123 @@
+#include "PalMapObject.h"
+#include "Net/UnrealNetwork.h"
+#include "PalMapObjectDamageReactionComponent.h"
+
+APalMapObject::APalMapObject(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
+    this->bReplicates = true;
+    const FProperty* p_RemoteRole = GetClass()->FindPropertyByName("RemoteRole");
+    (*p_RemoteRole->ContainerPtrToValuePtr<TEnumAsByte<ENetRole>>(this)) = ROLE_SimulatedProxy;
+    this->ConcreteModelClass = NULL;
+    this->DamageReaction = CreateDefaultSubobject<UPalMapObjectDamageReactionComponent>(TEXT("DamageReaction"));
+    this->VisualEffect = NULL;
+    this->bSpawnableIfOverlapped = false;
+    this->bNotSpawnableIfOverlapMapObject = false;
+    this->bLevelSpawnObject = false;
+    this->bSpawnSlipAboveIfAnyOverlap = false;
+    this->bShakeOnDamaged = false;
+    this->DestroyFXType = EPalMapObjectDestroyFXType::Normal;
+    this->PlayDestroyFXPlayerRange = 0.00f;
+    this->bShowOutlineInTargettingReticle = false;
+    this->bShowOutlineNearPlayer = false;
+    this->bAutoDestroyByOverlapSpawning = false;
+    this->bInDoorObject = false;
+    this->bBaseObject = false;
+    this->DamagableType = EPalMapObjectDamagableType::OtherGroup;
+    this->MapObjectModel = NULL;
+    this->bUnmanagedInLocal = false;
+    this->IndicatorWidgetClass = NULL;
+    this->ChangeMeshFXType = EPalMapObjectChangeMeshFXType::None;
+    this->bWorkLocationGroupRaycastStartOffsetOrigin = false;
+    this->bIgnoreBuildInstallConnection = false;
+    this->bShouldPlayDestroyFX = false;
+    this->bShouldPlayBuildCancelDestroyFX = false;
+}
+
+void APalMapObject::TryGetConcreteModel(EPalMapObjectGetModelOutPinType& OutputPin, UPalMapObjectConcreteModelBase*& ConcreteModel) {
+}
+
+void APalMapObject::SetIgnoreSave_ServerInternal(const bool bIgnore) {
+}
+
+void APalMapObject::OnUpdatedEnableTickByModel(UPalMapObjectModel* Model) {
+}
+
+void APalMapObject::OnRep_PoolSpawnState() {
+}
+
+void APalMapObject::OnRep_MapObjectModel() {
+}
+
+void APalMapObject::OnInteractEnd(AActor* Other, TScriptInterface<IPalInteractiveObjectComponentInterface> Component) {
+}
+
+void APalMapObject::OnInteractBegin(AActor* Other, TScriptInterface<IPalInteractiveObjectComponentInterface> Component) {
+}
+
+void APalMapObject::OnDisposeModel_ServerInternal(UPalMapObjectModel* DisposeModel, const FPalMapObjectDisposeOptions& Options) {
+}
+
+void APalMapObject::OnDamaged(UPalMapObjectModel* TargetModel, const FPalDamageInfo& DamageInfo) {
+}
+
+void APalMapObject::OnCloseParameter(UPalHUDDispatchParameterBase* Parameter) {
+}
+
+bool APalMapObject::IsExistsWorkingAnyWorker() const {
+    return false;
+}
+
+bool APalMapObject::IsExistsAssignedAnyWorker() const {
+    return false;
+}
+
+UPalMapObjectModel* APalMapObject::GetModel() const {
+    return NULL;
+}
+
+FGuid APalMapObject::GetGroupIdBelongTo() const {
+    return FGuid{};
+}
+
+FGuid APalMapObject::GetBaseCampIdBelongTo() const {
+    return FGuid{};
+}
+
+void APalMapObject::DisposeSelf_ServerInternal() {
+}
+
+void APalMapObject::CallOrRegisterOnSetConcreteModel(FPalMapObjectConcreteModelDelegate Delegate) {
+}
+
+void APalMapObject::BroadcastShouldPlayDestroyFX_Implementation() {
+}
+
+void APalMapObject::BroadcastShouldPlayBuildCancelDestroyFX_Implementation() {
+}
+
+void APalMapObject::BroadcastShouldNotPlayDestroyFX_Implementation() {
+}
+
+void APalMapObject::BroadcastShouldNotPlayBuildCancelDestroyFX_Implementation() {
+}
+
+void APalMapObject::BroadcastPlayRespawnFX_Implementation() {
+}
+
+void APalMapObject::BroadcastDestroyPoolableObjectWithDestroyFX_Implementation() {
+}
+
+void APalMapObject::BroadcastDestroyPoolableObject_Implementation() {
+}
+
+void APalMapObject::BP_OnSetConcreteModel_Implementation(UPalMapObjectConcreteModelBase* ConcreteModel) {
+}
+
+void APalMapObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    
+    DOREPLIFETIME(APalMapObject, ModelInstanceId);
+    DOREPLIFETIME(APalMapObject, MapObjectModel);
+    DOREPLIFETIME(APalMapObject, PoolSpawnState);
+}
+
+

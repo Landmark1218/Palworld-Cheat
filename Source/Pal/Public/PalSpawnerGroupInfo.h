@@ -1,0 +1,35 @@
+#pragma once
+#include "CoreMinimal.h"
+#include "EPalOneDayTimeType.h"
+#include "EPalWeatherConditionType.h"
+#include "PalSpawnerOneTribeInfo.h"
+#include "PalSpawnerGroupInfo.generated.h"
+
+USTRUCT(BlueprintType)
+struct FPalSpawnerGroupInfo {
+    GENERATED_BODY()
+public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName OriginalRowName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName OriginalSpawnerName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 Weight;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EPalOneDayTimeType OnlyTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EPalWeatherConditionType OnlyWeather;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FPalSpawnerOneTribeInfo> PalList;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bHasWorldTreeAura;
+    
+    PAL_API FPalSpawnerGroupInfo();
+};
+

@@ -1,0 +1,1924 @@
+#pragma once
+#include "CoreMinimal.h"
+#include "UObject/NoExportTypes.h"
+#include "UObject/NoExportTypes.h"
+#include "UObject/NoExportTypes.h"
+#include "GameFramework/CheatManager.h"
+#include "EPalActionType.h"
+#include "EPalArenaRank.h"
+#include "EPalBaseCampWorkerEventType.h"
+#include "EPalBaseCampWorkerSickType.h"
+#include "EPalBossBattleDifficulty.h"
+#include "EPalBossType.h"
+#include "EPalDipType.h"
+#include "EPalEnergyType.h"
+#include "EPalGuildNotificationType.h"
+#include "EPalGuildPermission.h"
+#include "EPalGuildRole.h"
+#include "EPalLimitVolumeFlag.h"
+#include "EPalMapBaseCampWorkerOrderType.h"
+#include "EPalMapObjectVisualEffectType.h"
+#include "EPalPassiveSkillEffectType.h"
+#include "EPalRelicType.h"
+#include "EPalSkinType.h"
+#include "EPalStatusID.h"
+#include "EPalUserPrivilege.h"
+#include "EPalWildlifeSanctuaryAlertState.h"
+#include "PalInstanceID.h"
+#include "Templates/SubclassOf.h"
+#include "PalCheatManager.generated.h"
+
+class APalDebug_SpawnInfoReporter;
+class APalImGui;
+class APalPlayerCharacter;
+class APalPlayerState;
+class UDataTable;
+class UPalDebugWindowSetting;
+class UPalIndividualCharacterHandle;
+class UPalStatPalCount;
+class UPingIP;
+
+UCLASS(Blueprintable)
+class PAL_API UPalCheatManager : public UCheatManager {
+    GENERATED_BODY()
+public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UPalDebugWindowSetting* DebugWindowSetting;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UDataTable* DebugProgressPresetDataTable;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<APalDebug_SpawnInfoReporter> SpawnerInfoReporterClass;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    APalImGui* PalImGui;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UPalStatPalCount* PalCountSystem;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    APalDebug_SpawnInfoReporter* SpawnInfoReporter;
+    
+public:
+    UPalCheatManager();
+
+    UFUNCTION(BlueprintCallable, Exec)
+    void WorkerEventLog();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void WorkerEventInterval(const float Interval);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void WildPalCombatStart();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void WazaCoolTimeFastMode();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void VisitorTravel();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UpdateBaseCampWorkerSlotNum(const int32 SlotNum);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UpdateBaseCampTickInvokeMaxNumInOneTick(const int32 Value);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UpdateBaseCampLevelMax();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnregisterTickFunctionMapObjectNotExistsConcrete();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnlockTechnologyByLvCap(int32 Lv);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnlockOneTechnology(FName technologyName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnlockHiddenLocationOnWorldMapUI();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnlockAllWorldMap();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnlockAllRecipeTechnology();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnlockAllCategoryTechnology();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnlockAllAreaBarriers();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UnlockAchievement(const FString& AchievementId, int32 Progress);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void UNKO();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TriggerBaseCampWorkerSickServerInternal(const FGuid& InvokerPlayerUId, const EPalBaseCampWorkerSickType SickType);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TriggerBaseCampWorkerSick(const EPalBaseCampWorkerSickType SickType);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TriggerBaseCampWorkerEvent(const EPalBaseCampWorkerEventType EventType);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TraceReticleDirectionAllObjectType(const float Length);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleVisibleStaticMeshImposterChunk();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleVisibleLevelObject(const FName ClassName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleVisibleFoliageChunk();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleUserAchievementDebug();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleSpawnRandomIncidentLotteryDataOnly();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleShowReticleLocation();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleShowMsgID();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleShowDropItemHitEventLog();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleShowActionSkillHitCount();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleRideMenuLockLog();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void ToggleRevision_BP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleRevision();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TogglePartnerSkillNoDecrease();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleMapObjectGuildSecurity();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleLoadingScreen();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleKillOnPlayerRide();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleHUD();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleForceSpawnRandomIncident();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleForceLegacyNPCSpawnerSpawnCheck();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleFishMove();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleFishingSuccess();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleFishingSearchAreaDraw();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleDrawNPCSpawnerStatePillar();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleDrawNPCSpawnerDirectionalSpawnRange();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleDebugHatchingEggLog();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleDebugFishingSpotRespawnTime();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleBuildInstallCheckLookToCamera();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleBaseCampWorkerSanityDetail();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ToggleABPLean();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void TimeStopForBP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void TestRequestLiftupBaseCampWorker();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TestReplicationSync(const FString& GuildId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TestGuildNotification(int32 Type);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToWorldTreeEntrance();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToSafePoint();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToNearestPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToNearestCamp();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToLocationWithYaw(float X, float Y, float Z, float Yaw);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToLocationWithRotation(float X, float Y, float Z, float Yaw, float Pitch);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToLocationByClipboard();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToLocation(float X, float Y, float Z);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToLastLandingLocation();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToDungeonEntranceRandom();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToDungeonEntranceByRandomScattered();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToDungeonEntranceByIndex(const int32 Index);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToDungeonEntranceByDataLayer(const FName DataLayerName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToDebugTeleportPoint(const FName PointName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToCurrentStageRelativeLocation(float X, float Y, float Z);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToCurrentDungeonTreasureBox();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToCurrentDungeonGoal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToBotLocation(int32 botIndex);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToBotCamp(int32 botIndex);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportToBossTower(EPalBossType BossType);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportNearestPlayerToMe() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void TeleportBaseCampWorkerToFoodBox();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SwapUserPrivilege(EPalUserPrivilege Privilege);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SwapForceMuteBlockForMyself();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StunPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StringToPlayerUID(const FString& Str);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StopTimerDropItem();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StopOtomoMovement() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StopOtomoAI() const;
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void StartWildPalCombat();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void StartTraceAllOption();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StartLabResearchNotConsumeMaterials(const FName ResearchId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StartDismantlingMode();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StartDiscord(const FString& LobbySecret);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StartBuildMode(const FName BuildObjectId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void StartArenaSolo(EPalArenaRank ArenaRank);
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void SpectatorOnForBP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpectatorOn();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void SpectatorOffForBP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpectatorOff();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpawnWorldTreeMonster(const FName CharacterID, int32 Level);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpawnUniqueNPC(const FName CharacterID);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpawnPalEggBreedFarm(const FName MonsterId, const float Range);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpawnMonsterWithPassiveSkill(const FName CharacterID, const FString& PassiveSkillNames, int32 Level);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpawnMonsterForPlayer(const FName& CharacterID, int32 Num, int32 Level);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpawnMonster(const FName CharacterID, int32 Level);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SpawnFishShadowToReticleSpot(const FName FishShadowId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SleepAllEnemy();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SkipInvaderDeclaration();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SkipCutscene();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShutdownRemoteServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowTargetLocalPlayerEnemyList();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowStreamingLevel();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowSpawnerTarget();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowSpawnerInfo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowSnapMode();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowSaveFileNum();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowRideFailureLog();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowPoliceSpawnLocation();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowPlayers();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowPlayerMoveSpeed();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowPassiveSkillStatus();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowPalEggStatus();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowPalCount();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowObjectNameGround();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowObjectNameForward();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowMovementMode();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowMaxPlayers();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowMapObjectStatus();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowMapObjectFoliageStatus();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowMapObjectConnector();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowLocalSaveData();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowLaunchArguments() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowItemSpawnerInfo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowInviteCode() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowInvaderDebugLog() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowHateArrow();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowFloorLocation();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowEnvironmentDisableVolumeState();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDiscordFriends();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDialog(FText Msg);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDefenseAttackTarget();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDefenseAttackableRange();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDebugWorkerMovementTickSuppress();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDebugWorkAssignTarget();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDebugWorkAssign();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDebugWanted();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDebugGuildSecurity();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowDebugCrime();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowCharacterStatus();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowBuildObjectInstallCheck();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowAlert(FText Msg);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowAISound();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowActionName();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowActionAndStatus_ToServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowActionAndStatus();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetVoiceID(int32 VoiceID);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetVisitorName(const FString& VisitorName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetVisibleLevelObjectAll(const bool bVisible);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetVisibilityMapObject(const FName MapObjectId, const bool bVisible);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetSunLightShadowDistance(const float InDistance);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetShouldReplicateBaseCampItemStackInfo(const bool bReplicate);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetSanityToBaseCampPal(const float Sanity);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetRelicStatusPoint(EPalRelicType Type, int32 Point);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetReflexMode(int32 Mode);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPlayerSP(int32 NewSP);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPlayerSkin(EPalSkinType Part, FName SkinName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPlayerLastOnline(FGuid TargetPlayerUId, float DaysAgo);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPlayerHP(int32 NewHP);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPlayerCameraBoomLengthRate(const float Rate);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPassive_PlayerWeapon(FName firstPassive, FName secondPassive, FName thirdPassive);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPalWorldTimeScale(float Rate);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPalWorldTime(int32 Hour);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPalEggStatusRange(const float Range);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPaldexComplete(bool IsComplete);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPalCaptureNumRecordAll(const int32 CaptureNum);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPalCaptureNumRecord(const FName& CharacterID, const int32 CaptureNum);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPacketLoss(int32 InLossPercent, int32 OutLossPercent);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetOtomoPalWorkSpeedRank(int32 Rank);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetOtomoPalRank(int32 Rank);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetOtomoPalHPRank(int32 Rank);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetOtomoPalDefenceRank(int32 Rank);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetOtomoPalAttackRank(int32 Rank);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetNavMeshVerticalFix(int32 Enabled);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetMultiplayRestriction(bool bRestriction);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetMergeRegionSize(float NewValue);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetMemoryWarningThresholdMB(int32 MemoryWarningThresholdMB);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetMapObjectStatusRange(const float Range);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetMapObjectStatusMapObjectId(const FName MapObjectId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetMapObjectAllowedRoles(const FString& RolesCsv);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetlWildlifeSanctuaryAlertState(EPalWildlifeSanctuaryAlertState NewState);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetLoadingSceneVisible(bool IsVisible);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetInventorySize(int32 NewSize);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetInventoryItemDurability(const float Percent);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetHardTowerBossDebugNo(int32 DebugNo);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGuildRoleLocalPlayer(EPalGuildRole NewRole);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGuildRole(FGuid TargetPlayerUId, EPalGuildRole NewRole);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGuildPermission(EPalGuildRole TargetRole, EPalGuildPermission Permission, bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGuildNotificationSetting(EPalGuildNotificationType Type, bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGuildMemberOffline(FGuid TargetPlayerUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGameTime_NextNight_SecondsAgo(const int32 SecondsAgo);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGameTime_NextNight();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGameTime_NextDay_SecondsAgo(const int32 SecondsAgo);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetGameTime_NextDay();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetFullStomachToBaseCampPal(const float Value);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetFPSForServer(float fps);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetForceSpawnRandomIncidentName(const FString& IncidentName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetForceMutation(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetForceLocationTeleport(bool bForceLocationTeleport);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetForceLegacyNPCSpawnerSpawnCheck(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetEnablePlayerRespawnInHardcore(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetEnableInteractLock(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDummyPlayerList(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDrawNPCSpawnerStatePillar(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDrawNPCSpawnerDirectionalSpawnRange(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDLSSFGMode(int32 Mode);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDiscordMuteSelf(int32 Mute);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDisableInteractReticleTarget(bool bIsEnable);
+    
+    UFUNCTION(Exec)
+    void SetDip(EPalDipType Type, int32 InValue);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDebugWorkerMovementTickSuppress(const bool bOn);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetDebugRespawnPointForPlayer(APalPlayerCharacter* Character, FVector Location);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDebugFullStomachDecreaseRate(const float Rate);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDebugBaseCampPalFarMovementTickSuppress(const bool bOn);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetDamageTextMaxNum(int32 Num);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCollectGameDataInterval(float IntervalSec);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCharacterName(const FString& Name);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCharacterMakeColor(FColor Color);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCharacterMakeAllRed();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCharacterMakeAllNormal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCharacterMakeAllMin();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCharacterMakeAllMax();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCharacterMakeAllGreen();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetCharacterMakeAllBlue();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetBaseCampWorkerHpSingle(const float Percentage);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetBaseCampWorkerHp(const float Percentage);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetAutoTransferThreshold(int32 Days);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetArenaRankPoint(int32 ArenaRankPoint);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetAlwaysGrantPassiveSkillMode(bool flag);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetAllowBaseCampBattle(const bool bAllowBaseCampBattle);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetActivity(const FString& ConnStr, int32 maxPlayer, int32 currentPlayer);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SessionMemberInfoDump();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SendTestGuildNotificationChat(int32 TypeInt, const FString& PlayerName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SendSaveLogTelemetry(const FString& ErrorType);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SendChatToBroadcast(const FString& Text);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SaikyoGamePreset();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RunGuildTestScenario(const FString& ScenarioName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RideIKEnable();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RideIKDisable();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RespawnPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RespawnMeshFix();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ResetOilrig();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ResetGuildPermissionsToDefault();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ResetDisplayTermsOfService();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RerollCharacterMake();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestTransferMasterAs(FGuid ActorUId, FGuid TargetUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestSetPermissionAs(FGuid ActorUId, EPalGuildRole TargetRole, EPalGuildPermission Perm, bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestLogTreasureBoxLocalPlayerAround();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestLogServerThreadNum();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestFillSlotChestToInventory();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestFillSlotChestFromInventory();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestExpelAs(FGuid ActorUId, FGuid TargetUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestDamageToMapObjectInAllBaseCamp(const int32 Value);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestDamageToBaseCampPoint(const int32 Value);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RequestChangeRoleAs(FGuid ActorUId, FGuid TargetUId, EPalGuildRole NewRole);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RepeatCommand(const int32 Num, const FString& Delay, const FString& Command);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RepairEquipment();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RemoveStatusToSpawnedOtomo(EPalStatusID statusID);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RemovePlayerSkin(EPalSkinType Part, FName InTarget);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RefreshQuestData();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RandomizePassive_PlayerWeapon();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void RaidBossArea_SurrenderLocalPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PromoteAllGuestsToMember();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ProgressQuestForce(const FName QuestId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintWorkLog();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintRelic();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintRealTime();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintRandomizerInfo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintRaidBossAreaPhase();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintPlayerLocationAndRotation();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintPlatformInventory();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintPakFiles();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintNetDriverLog();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintLevelObjectClass();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintInventoryDynamicItemLog();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintGameTime();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintArenaSpectateInfoLog(bool ForceNetUpdate);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PrintAllDataLayerIDHash();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void PlayAreaBarrierUnlockCutscene_BP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void PlayAreaBarrierUnlockCutscene();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void Ping(const FString& Address);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PetPal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ParallelForUpdateActiveTiles();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PalmiTargetEnemny();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PaintBuildObjectColor(const bool bOn);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void OrderQuestForce(const FName QuestId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void OrderBaseCampWorker(const EPalMapBaseCampWorkerOrderType OrderType);
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OpenTitleForBP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void OpenTitle();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OpenPrivateServerForBP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void OpenPrivateServer();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OpenMultiBattleMapForBP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void OpenMultiBattleMap();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void OpenDefaultMap();
+    
+    UFUNCTION(BlueprintCallable)
+    void OnSpawnedMonsterWithPassiveSkill(UPalIndividualCharacterHandle* CharacterHandle);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnPingComplete(UPingIP* PingIP, const FString& Address, int32 TimeMS);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnLocalPlayerSetupComplete(APalPlayerState* PlayerState);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_pp_set(float Weight);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_pp_param(float EdgeStrength, float GreenAmount, float Lift);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_pp_on(float Weight);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_pp_off();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_pp_dump();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_off();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_gamma(float Gamma);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_fix_exposure(float FixedBrightness);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_dark_off();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv_dark(float Strength, float Gamma, float Contrast);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void nv(float Strength);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void NotDecreaseWeaponItem();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void NotDecreaseDefenseBullet();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void NotConsumeMaterialsInCraft();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void NotConsumeMaterialsInBuild();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void NetRepGraphPrintGraphForServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void MuteListRemoveAll();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void MuteListDump();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void MuteListAllUser();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void MutekiForPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void MutekiForFriend();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void MutekiALL();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ManyUNKO();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void LogStages();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void LoginNative();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void LoginEOS();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void LogBaseCampInfo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ListAllGuilds();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ListAllGuildPermissions();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void LinkDiscordAccount();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void KillPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void KillGuildFriend();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void KillBaseCampWorkerSingle();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void KillBaseCampWorker();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void KillAllFriend();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void KillAllEnemy();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void KickPlayer(const FString& UserId, FText KickReason);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void JumpToClientStartLocation();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void JoinInviteCode(const FString& InviteCode) const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void JoinClientPlayerToServerGuild();
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsSkillCoolTime() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsShowCharacterStatus() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsNotDecreaseWeaponItem() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsNotDecreaseDefenseBullet() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsNotConsumeMaterialsInBuild() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsMutekiForPlayer() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsMutekiForFriend() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsMutekiALL() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsIgnoreBuildRestrictionBaseCamp() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsFixedSP() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsDisableEnemyEyeSight() const;
+    
+    UFUNCTION(Exec)
+    bool IsDipEnabled(EPalDipType Type, int32 Threshold) const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsCaptureSuccessAlways() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsCaptureFailAlways() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void IsAllStreamingCompleted();
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsActionName() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InvokePlayerAction(const EPalActionType ActionType);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InvaderMarchRandom();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InvaderMarchForNearestCamp(FName InvaderGropuName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InvaderMarch(FName InvaderGropuName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InstallVirtualBaseCamp();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InsightsTraceStopForServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InsightsTraceStopForLocal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InsightsTraceStartForServer(const FString& TraceFilePrefix);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InsightsTraceStartForLocal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InsightsTraceForServer(float Seconds, const FString& TraceFilePrefix);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void InitInventory(const FName StaticItemId, const int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void IgnoreRestrictedByItemsForPartnerSkill();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void IgnoreDamageCheckByServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void IgnoreBuildRestrictionBaseCamp();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void HPOneAllCharacter();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void HideTutorialQuest_BP();
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void HideTutorialQuest();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void HideDebugInfo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GuildDebug();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GivePlayerSkin(FName SkinName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GivePlatformPromotionItem();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GivePlatformInventoryItem(int32 ItemId, int32 Num);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetRelic(EPalRelicType Type, int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetReflexSupport();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetPlanerPal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetPalEgg(const FName CharacterID);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetItemWithPassiveSkill(FName StaticItemId, int32 Count, FName PassiveSkillId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetItemWithPassive(FName StaticItemId, int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetItemToLoadoutWithPassive(FName StaticItemId, int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetItemToLoadout(FName StaticItemId, int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetItem(FName StaticItemId, int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetGuildRole(FGuid TargetPlayerUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetGuildPermissions(EPalGuildRole TargetRole);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetDLSSFGSupport();
+    
+    UFUNCTION(Exec)
+    int32 GetDip(EPalDipType Type) const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GetAllRelic(int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void GenerateCombiMonster();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FullPowerForPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceUpdateBaseCampWorkerEvent();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceTransferMaster(FGuid NewMasterUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceSpawnRarePal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceSpawnPredatorPal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceRespawnSpawnerTarget();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceRespawnNearSpawners(float RadiusCM);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceRespawnNearItemSpawners(float RadiusCM);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceResetPropertiesPlayerBelongTo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceReportCriminal();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceReloadPlayerParameter();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceReleaseWanted();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceOverHeatAllBuildObject();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceMigrateGuildData();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceLowerSpecSetting();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceJoinGuild(FGuid PlayerUId, FGuid GuildId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceItemContainerDirtyAll();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceFoundNearestTreasureMapPoint(const int32 Rarity);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceExpireAllRaidBossPhases();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceExpelPlayer(FGuid PlayerUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceExitStageAllPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceExitStage();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceExitGuild(FGuid PlayerUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceDisplayTermsOfService();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceDisableTimerLight();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceDisablePalMeshCollision();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceDetectAroundPlayer(const float Range);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceAutoTransferCheck();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ForceArenaExitAll();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FootIKEnable();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FootIKDisable();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FixedUseEagleForGlider();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FixedSP();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FixedCannonDebugPrint(bool IsShow);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FixedActionRandomSeed();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FindGuildByName(const FString& Name);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void FetchMapObjectsTickIntervalInBackground();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ExitGuildPlayer(const FString& GuildName, APalPlayerCharacter* Player);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ExitGuildLocalPlayer(const FString& GuildName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnterGuildPlayer(const FString& GuildName, APalPlayerCharacter* Player);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnterGuildOtherPlayerBelongTo(const FGuid& TargetPlayerUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnterGuildLocalPlayerToCurrentBaseCampBelongTo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnterGuildLocalPlayer(const FString& GuildName);
+    
+    UFUNCTION(BlueprintCallable)
+    void EnterGroup(const FString& GroupName, FPalInstanceID IndividualId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnterDungeonByDataLayer(const FName DataLayerName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EndDiscord();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableStatUnit();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableStatPlayerInfo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableStatPalnet();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableStatPalNavigation();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableSkyCreator(const bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableOutputGameData();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableGameDataAPI();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableCommandToServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableCollectServerPalCount();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EasyGamePreset();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpSaveData();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpPlayersInBaseCamp();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpPalCharacterActorsForServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpOtomoPalGetAllPassiveSkill();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpOptionWorldSettings();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpNearestMapObjectSecurity();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpMapObjectOctreeStats();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpLastOnlineTimes();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpGuildNotificationSettings();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpGuildMemberList();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpGuildInfo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpGuildConfirmTexts();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpFishShadowOctreeStats();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpDip();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpBuilds();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpAllActorsForServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpAkComponent();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DropSupply();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DropItems(const FName StaticItemId, const int32 Num, const int32 DropCount);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DropItemByTimer(const FName StaticItemId, const int32 Num, const float Interval);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DropItem(const FName StaticItemId, const int32 Num);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DropBaseCampWorkerAll(const bool bOnPlace);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DropBaseCampWorker(const FGuid& BaseCampId, const bool bOnPlace);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DrawDebugRangeBaseCamp(const float LifeTime);
+    
+    UFUNCTION(Exec)
+    void DrawDebugLimitVolume(const EPalLimitVolumeFlag flag, const float Range, const float Duration);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DisposeGuild(const FString& GuildName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DismantleMapObjectFocusAt(const float RaycastLength);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DismantleMapObject(const FGuid& InstanceId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DismantleBaseCampFirst();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DismantleBaseCampByBaseCampId(const FGuid& BaseCampId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DisableScreenMessage();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DisableEnemyEyeSight();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DisableCrime();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DisableAnimTickForServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DipDebug();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DestroyAllAntiAirMissileLaunchers();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DenyCommunicationAllUser();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DeleteWorldAndShutdownRemoteServer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DeletePlayerSkin(FName SkinName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DeletePlayerInHardcore();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DeletePlayerAndQuitGame();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DeleteAllMapObjectSpawner();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DeleteAllMapObject();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DelayCommand(const FString& Command, const float DelayTime);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugWindow();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugWatchGameSystemInitCurrentSequenceHandles();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugSwitchForceDisableAutoSave();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugSMRenderDataSnapshot();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugSaveWorldOptionData(const FString& WorldName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugSaveWorldData(const FString& saveName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugSaveWithWorldName(const FString& InWorldName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugSaveLocalWorldData(const FString& saveName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugSaveFullWorldData(const FString& WorldName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugPrintIndividualParameterMap();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugMapObjectModelInfoByConcreteModelId(const FGuid& MapObjectConcreteModelId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugMapObjectModelInfo(const FGuid& MapObjectInstanceId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_VerifyDetector();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_StopDetector();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_StartTransportItemDetector();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_StartDetector();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_SetActionFilter(const FString& ActionNameFilter);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_ResetDetector();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpRecastTileLink(int32 FromTileX, int32 FromTileY, int32 FromLayer, int32 FromPolyIndex, int32 ToTileX, int32 ToTileY, int32 ToLayer, int32 ToPolyIndex);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpRecastPointFull(float X, float Y, float Z, int32 FromTileX, int32 FromTileY, int32 FromLayer, int32 FromPolyIndex, int32 ToTileX, int32 ToTileY, int32 ToLayer, int32 ToPolyIndex);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpRecastLookingAt(float TraceDistance, int32 MaxCorridorEdges);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpRecastHere(float SearchRadius, int32 MaxCorridorEdges);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpRecastAllInEscape(int32 MaxCorridorEdges);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpLookingAtFull(float TraceDistance, int32 MaxCorridorEdges);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpLookingAt(float TraceDistance);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpHere(float SearchRadius);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpFullHere(float SearchRadius, int32 MaxCorridorEdges);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DumpAllInEscape();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugKuruKuru_DetectorStatus();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugDeleteEnemyCampSaveData();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugChangeAutoSaveTimespan(float saveSpan);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugBroadcastNetworkError_ConnectionLost();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugBaseCampPalFarMovementTickSuppress();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugAutoSave();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugAutoRun();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DamageToSpawnedOtomo(int32 DamageValue);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DamageToPlayer(int32 DamageValue);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DamageBaseCampWorkerToOne();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CreateGuildWithAdmin(const FString& GuildName, const FGuid& AdminPlayerUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CreateGuildAndEnterLocalPlayer(const FString& GuildName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CreateGuild(const FString& GuildName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CountPalCharacter();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CopyWorldDirectoryName();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CopyPlayerUId();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CopyPlayerLocation();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CopyLabResearchCompletedIds();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ConsumePlatformInventoryItem(int32 ItemId, int32 Num);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ConnectServer(const FString& Address, const FString& Port, const FString& ServerPassword);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CompleteQuestTreeForce(const FName QuestId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CompleteQuestForce(const FName QuestId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CompleteLabResearches(const TArray<FName> ResearchIds);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CompleteLabResearchAll();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CompleteLabResearch(const FName ResearchId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CommandToServer(const FString& Command);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CloudRequestDumpFileList() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CloudRequestDownloadWorlds() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CloudRequestCleanUp() const;
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CleatDebugInfoText();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ClearVisitorName();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ClearSupply();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ClearPlatformInventoryItem();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ClearPassiveDebugSkill();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CheckMapObjectAccessAs(FGuid PlayerUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CheckJoinApprovalAs(FGuid TargetUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CheckGuildPermission(FGuid TargetPlayerUId, EPalGuildPermission Permission);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CheckFoliageChunkStatus(const bool bShowInstanceDetail, const bool bShowGridDetail);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ChangePassive_PlayerWeapon(int32 Index, FName SkillName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ChangeModeReplace(const bool bOn);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ChangeMaxPlayers(int32 Players);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ChangeMaxDrawDistanceStaticMeshImposter(const float Distance);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ChangeHUDScale(float Scale);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ChangeDebugBuildObjectColor(const FColor& Color);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ChangeCrossplayPlatforms(const FString& Command, const FString& PlatformName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ChangeAllowConnectPlatform(const FString& PlatformName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CauseServerCrash();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CauseHang();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CauseEnsure();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CauseCrash();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CaptureSuccessAlways();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CaptureRandomMonsters(int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CaptureNewMonster(const FName CharacterID);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CaptureFailAlways();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CaptureAllMonsters();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CaptureAllHumans();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CaptureAllEnemy();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CancelPlayerAction(const EPalActionType ActionType);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void CancelConvertItemWork();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BuildNotConsumeMaterials();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BuildDebugBaseCamp(FName Mode);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BotOn();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BotOff();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BlockListRemoveAll();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BlockListDump();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BlockListAllUser();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BeginSpectate(bool bAdminMode);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BanPlayerFromGuildLocalPlayerBelongTo(const FGuid& TargetPlayerUId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ApplyRelicRank(EPalRelicType Type, int32 ToRank);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ApplyDebugGameProgress(FName PresetName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ApplyAllRelicRank(int32 ToRank);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddTechnologyPoints(int32 AddPoints);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddStatusToSpawnedOtomo(EPalStatusID statusID);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddRecord_TowerBossDefeat(const EPalBossType BossType, const EPalBossBattleDifficulty Difficulty);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddRecord_NormalBossDefeatAll();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddPlayerExp(int32 addExp);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddPassiveDebugSkill(EPalPassiveSkillEffectType PassiveType, float Value);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddPartyExp(int32 addExp);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddOneStatusPlayer();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddOneStatusOtomo();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddOneStatusEnemy();
+    
+    UFUNCTION(Exec)
+    void AddMoney(int64 addValue);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddMapObjectEffectVisualAround_Burn(const float Range);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddMapObjectEffectVisualAround(const float Range, const EPalMapObjectVisualEffectType EffectType);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddGameTime_Minutes(const int32 Minutes);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddGameTime_Hours(const int32 Hours);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddExStatusPoint(int32 Point);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddExpForALLPlayer(int32 addExp);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddBossTechnologyPoints(int32 AddPoints);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void AddBaseCampEnergyAmount(const EPalEnergyType EnergyType, const float Amount);
+    
+};
+
